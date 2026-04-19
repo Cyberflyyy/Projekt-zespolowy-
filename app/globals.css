@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-sans text-ink;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: #EBF3FF;
+    color: #1C1C1C;
+  }
+}
+
+@layer components {
+  /* ── Cards ─────────────────────────────────────────────── */
+  .notion-card {
+    @apply bg-canvas border border-line rounded-lg shadow-card
+           transition-all duration-200;
+  }
+  .notion-card:hover {
+    @apply shadow-card-hover border-line-hover -translate-y-0.5;
+  }
+
+  /* ── Inputs ─────────────────────────────────────────────── */
+  .notion-input {
+    @apply w-full rounded-md border border-line bg-canvas px-3.5 py-2.5 text-sm text-ink
+           placeholder:text-ink-subtle focus:outline-none focus:ring-2 focus:ring-primary/20
+           focus:border-primary/60 transition-all duration-150;
+  }
+
+  /* ── Buttons ─────────────────────────────────────────────── */
+  .notion-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-semibold
+           transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .notion-btn-primary {
+    @apply notion-btn bg-primary text-white hover:bg-primary-hover shadow-card
+           hover:shadow-card-hover hover:-translate-y-0.5 active:translate-y-0 active:shadow-card;
+  }
+
+  .notion-btn-secondary {
+    @apply notion-btn bg-canvas border border-line text-ink hover:bg-surface
+           hover:border-line-hover hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .notion-btn-ghost {
+    @apply notion-btn text-ink-muted hover:bg-surface hover:text-ink rounded-md;
+  }
+
+  /* ── Chips / Badges ─────────────────────────────────────── */
+  .notion-chip {
+    @apply inline-flex items-center gap-1.5 rounded-pill px-3 py-1 text-xs font-semibold;
+  }
+
+  /* ── Misc ───────────────────────────────────────────────── */
+  .notion-divider {
+    @apply h-px w-full bg-line;
+  }
+
+  .notion-link {
+    @apply text-primary hover:text-primary-hover transition-colors font-medium;
+  }
+}
+
+@layer utilities {
+  .notion-prose {
+    @apply max-w-prose text-base leading-7 text-ink-muted;
+  }
+  .notion-prose p + p {
+    @apply mt-4;
+  }
+
+  /* 3D transform utilities */
+  .perspective-600  { perspective: 600px; }
+  .perspective-800  { perspective: 800px; }
+  .perspective-1000 { perspective: 1000px; }
+  .perspective-1200 { perspective: 1200px; }
+  .preserve-3d      { transform-style: preserve-3d; }
+  .backface-hidden  { backface-visibility: hidden; }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #2D7FF9 0%, #8B46FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-text-warm {
+    background: linear-gradient(135deg, #FF6F2C 0%, #F82B60 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass morphism */
+  .glass {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.9);
+  }
+
+  /* Animated gradient border */
+  .gradient-border {
+    background:
+      linear-gradient(white, white) padding-box,
+      linear-gradient(135deg, #2D7FF9, #8B46FF, #06A77D) border-box;
+    border: 2px solid transparent;
+  }
+}
+
+/* ── Background hero gradient ─────────────────────────────── */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 90% 70% at 60% 0%, rgba(45,127,249,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 60% at 10% 90%, rgba(139,70,255,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90% 80%, rgba(6,167,125,0.04) 0%, transparent 50%);
+}
+
+/* ── Floating orb blobs ───────────────────────────────────── */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ── Staggered animation delay helpers ───────────────────── */
+.delay-75  { animation-delay:  75ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
