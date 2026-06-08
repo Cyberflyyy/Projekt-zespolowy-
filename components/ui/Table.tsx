@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils/cn";
 
 export function Table({ className, children, ...props }: HTMLAttributes<HTMLTableElement>) {
   return (
-    <div className="notion-card overflow-hidden p-0">
+    <div className="kp-card overflow-hidden p-0">
       <table className={cn("w-full text-sm", className)} {...props}>
         {children}
       </table>
@@ -38,7 +38,7 @@ export function Tr({ className, ...props }: HTMLAttributes<HTMLTableRowElement>)
 export function EmptyState({ title, description }: { title: string; description?: string }) {
   return (
     <div className="py-12 text-center">
-      <p className="font-serif text-heading-3 text-ink">{title}</p>
+      <p style={{ fontSize: "1.375rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--fg)" }}>{title}</p>
       {description && <p className="mt-1 text-sm text-ink-muted">{description}</p>}
     </div>
   );

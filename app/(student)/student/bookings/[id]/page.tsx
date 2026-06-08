@@ -30,7 +30,7 @@ export default async function StudentBookingDetails({
       />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-        <div className="notion-card p-6 space-y-4">
+        <div className="kp-card p-6 space-y-4">
           <Row label="Termin" value={booking.slot ? formatDateLong(booking.slot.starts_at) : "—"} />
           <Row label="Czas trwania" value={`${booking.listing?.duration_minutes ?? 60} min`} />
           <Row label="Kwota" value={formatMoney(booking.amount_total, booking.currency)} />
@@ -45,8 +45,9 @@ export default async function StudentBookingDetails({
           )}
         </div>
 
-        <aside className="notion-card p-6">
-          <h3 className="font-serif text-heading-3">Płatność</h3>
+        <aside className="kp-card p-6">
+          <div className="kp-eyebrow" style={{ marginBottom: 8 }}>// płatność</div>
+          <h3 style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--fg)", marginBottom: 12 }}>Płatność</h3>
           {booking.payment ? (
             <div className="mt-3 space-y-2 text-sm">
               <div className="flex justify-between">
@@ -68,7 +69,7 @@ export default async function StudentBookingDetails({
           )}
 
           <div className="mt-5">
-            <Link href="/student/bookings" className="notion-btn-ghost w-full justify-center">
+            <Link href="/student/bookings" className="kp-btn kp-btn-ghost w-full justify-center">
               ← Wróć do listy
             </Link>
           </div>

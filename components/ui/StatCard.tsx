@@ -12,13 +12,20 @@ export function StatCard({
   icon?: ReactNode;
 }) {
   return (
-    <div className="notion-card p-5">
-      <div className="flex items-center justify-between">
-        <span className="text-xs uppercase tracking-widest text-ink-subtle">{label}</span>
-        {icon && <span className="text-ink-subtle">{icon}</span>}
+    <div className="kp-card p-5" style={{ boxShadow: "var(--shadow-sm)" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <span className="kp-eyebrow">{label}</span>
+        {icon && <span style={{ color: "var(--fg-3)" }}>{icon}</span>}
       </div>
-      <div className="mt-2 font-serif text-heading-1 text-ink">{value}</div>
-      {hint && <div className="mt-1 text-xs text-ink-muted">{hint}</div>}
+      <div
+        className="kp-mono"
+        style={{ marginTop: 12, fontSize: 28, fontWeight: 600, color: "var(--fg)", letterSpacing: "-0.03em" }}
+      >
+        {value}
+      </div>
+      {hint && (
+        <div style={{ marginTop: 4, fontSize: 12, color: "var(--fg-4)" }}>{hint}</div>
+      )}
     </div>
   );
 }

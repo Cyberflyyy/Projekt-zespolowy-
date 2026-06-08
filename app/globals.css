@@ -2,156 +2,309 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --bg:            #FAFAFA;
+  --surface:       #FFFFFF;
+  --surface-2:     #F4F4F8;
+  --surface-3:     #EEEEF4;
+  --border:        #E5E7EF;
+  --border-strong: #D4D4DC;
+  --fg:            #1A1F3A;
+  --fg-2:          #404662;
+  --fg-3:          #6E7491;
+  --fg-4:          #A1A6BE;
+  --accent:        #5D6BB5;
+  --accent-2:      #4956A0;
+  --accent-soft:   #EEF0FA;
+  --accent-tint:   #F6F7FC;
+  --accent-fg:     #FFFFFF;
+  --success:       #16A34A;
+  --warning:       #CA8A04;
+  --danger:        #DC2626;
+  --shadow-sm:     0 1px 2px rgba(26,31,58,0.05);
+  --shadow-md:     0 4px 16px rgba(93,107,181,0.10), 0 1px 2px rgba(26,31,58,0.05);
+  --shadow-lg:     0 24px 48px -12px rgba(93,107,181,0.20), 0 2px 4px rgba(26,31,58,0.05);
+  --shadow-glow:   0 0 0 4px rgba(93,107,181,0.12);
+  --font-sans:     "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display:  "Inter Tight", "Inter", sans-serif;
+  --font-mono:     "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
 @layer base {
-  :root {
-    color-scheme: light;
-  }
+  :root { color-scheme: light; }
 
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+    font-feature-settings: "cv11", "ss01";
+    letter-spacing: -0.005em;
   }
 
   body {
     @apply bg-canvas text-ink font-sans;
+    line-height: 1.5;
   }
 
   h1, h2, h3, h4 {
-    @apply font-sans text-ink;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    margin: 0;
   }
 
-  ::selection {
-    background: #EBF3FF;
-    color: #1C1C1C;
-  }
+  p { margin: 0; }
+
+  ::selection { background: var(--accent-soft); color: var(--fg); }
 }
 
 @layer components {
-  /* ── Cards ─────────────────────────────────────────────── */
-  .notion-card {
-    @apply bg-canvas border border-line rounded-lg shadow-card
-           transition-all duration-200;
-  }
-  .notion-card:hover {
-    @apply shadow-card-hover border-line-hover -translate-y-0.5;
-  }
 
-  /* ── Inputs ─────────────────────────────────────────────── */
-  .notion-input {
-    @apply w-full rounded-md border border-line bg-canvas px-3.5 py-2.5 text-sm text-ink
-           placeholder:text-ink-subtle focus:outline-none focus:ring-2 focus:ring-primary/20
-           focus:border-primary/60 transition-all duration-150;
+  /* ── Cards ─────────────────────────────────────────────── */
+  .kp-card {
+    @apply bg-canvas border border-line rounded-lg;
+  }
+  .kp-card-hover {
+    @apply transition-all duration-150;
+    box-shadow: var(--shadow-sm);
+  }
+  .kp-card-hover:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+    @apply border-line-hover;
   }
 
   /* ── Buttons ─────────────────────────────────────────────── */
-  .notion-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-semibold
-           transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none;
+  .kp-btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded border border-transparent
+           text-[13px] font-medium cursor-pointer transition-all duration-[120ms] whitespace-nowrap;
+    height: 36px;
+    padding: 0 14px;
+    letter-spacing: -0.01em;
+    font-family: inherit;
+  }
+  .kp-btn-primary {
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+    color: var(--accent-fg);
+    border-color: var(--accent-2);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 1px 2px rgba(73,86,160,0.25), 0 4px 14px -2px rgba(93,107,181,0.45);
+  }
+  .kp-btn-primary:hover { filter: brightness(1.08); }
+  .kp-btn-secondary {
+    background: var(--surface);
+    color: var(--fg);
+    border-color: var(--border);
+  }
+  .kp-btn-secondary:hover { background: var(--surface-2); }
+  .kp-btn-ghost {
+    background: transparent;
+    color: var(--fg-2);
+    border-color: transparent;
+  }
+  .kp-btn-ghost:hover { background: var(--surface-2); color: var(--fg); }
+  .kp-btn-lg { height: 44px; padding: 0 20px; font-size: 14px; }
+  .kp-btn-sm { height: 28px; padding: 0 10px; font-size: 12px; }
+
+  /* ── Inputs ─────────────────────────────────────────────── */
+  .kp-input {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    @apply rounded text-[13px] font-sans transition-[border-color] duration-[120ms] outline-none;
+    color: var(--fg);
+  }
+  .kp-input:focus { border-color: var(--accent); box-shadow: var(--shadow-glow); }
+  .kp-input::placeholder { color: var(--fg-4); }
+
+  /* Keep old notion-* classes for backwards compat on auth pages */
+  .notion-input  { @apply kp-input; }
+  .notion-btn    { @apply kp-btn; }
+  .notion-btn-primary   { @apply kp-btn kp-btn-primary; }
+  .notion-btn-secondary { @apply kp-btn kp-btn-secondary; }
+  .notion-btn-ghost     { @apply kp-btn kp-btn-ghost; }
+  .notion-card  { @apply kp-card; }
+  .notion-link  { color: var(--fg); text-decoration: none; font-size: 13px; font-weight: 500; }
+  .notion-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── Badge / Chip ─────────────────────────────────────────── */
+  .kp-badge {
+    @apply inline-flex items-center gap-1;
+    height: 22px;
+    padding: 0 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    @apply rounded-pill text-[11px] font-medium;
+    color: var(--fg-2);
+    letter-spacing: -0.005em;
+  }
+  .kp-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--fg-3);
+    flex-shrink: 0;
+  }
+  .notion-chip { @apply kp-badge; }
+
+  /* ── Eyebrow label ──────────────────────────────────────── */
+  .kp-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-4);
   }
 
-  .notion-btn-primary {
-    @apply notion-btn bg-primary text-white hover:bg-primary-hover shadow-card
-           hover:shadow-card-hover hover:-translate-y-0.5 active:translate-y-0 active:shadow-card;
+  /* ── Avatar ─────────────────────────────────────────────── */
+  .kp-avatar {
+    @apply inline-flex items-center justify-center rounded-full border border-line;
+    width: 32px; height: 32px;
+    background: var(--surface-2);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fg-2);
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
   }
+  .kp-avatar-lg { width: 40px; height: 40px; font-size: 14px; }
+  .kp-avatar-xl { width: 48px; height: 48px; font-size: 16px; }
 
-  .notion-btn-secondary {
-    @apply notion-btn bg-canvas border border-line text-ink hover:bg-surface
-           hover:border-line-hover hover:-translate-y-0.5 active:translate-y-0;
+  /* ── Navigation ─────────────────────────────────────────── */
+  .kp-nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    text-decoration: none;
   }
-
-  .notion-btn-ghost {
-    @apply notion-btn text-ink-muted hover:bg-surface hover:text-ink rounded-md;
+  .kp-nav-link {
+    font-size: 13px;
+    color: var(--fg-3);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 120ms;
   }
+  .kp-nav-link:hover { color: var(--fg); }
+  .kp-nav-link.active { color: var(--fg); }
 
-  /* ── Chips / Badges ─────────────────────────────────────── */
-  .notion-chip {
-    @apply inline-flex items-center gap-1.5 rounded-pill px-3 py-1 text-xs font-semibold;
-  }
-
-  /* ── Misc ───────────────────────────────────────────────── */
-  .notion-divider {
-    @apply h-px w-full bg-line;
-  }
-
-  .notion-link {
-    @apply text-primary hover:text-primary-hover transition-colors font-medium;
+  /* ── Keyboard hint ──────────────────────────────────────── */
+  .kp-kbd {
+    @apply inline-flex items-center justify-center;
+    min-width: 18px; height: 18px;
+    padding: 0 4px;
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    @apply rounded-xs;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-3);
+    background: var(--surface);
   }
 }
 
 @layer utilities {
-  .notion-prose {
-    @apply max-w-prose text-base leading-7 text-ink-muted;
-  }
-  .notion-prose p + p {
-    @apply mt-4;
+  /* Mono numbers */
+  .kp-mono {
+    font-family: var(--font-mono);
+    font-feature-settings: "tnum";
   }
 
-  /* 3D transform utilities */
-  .perspective-600  { perspective: 600px; }
-  .perspective-800  { perspective: 800px; }
-  .perspective-1000 { perspective: 1000px; }
-  .perspective-1200 { perspective: 1200px; }
-  .preserve-3d      { transform-style: preserve-3d; }
-  .backface-hidden  { backface-visibility: hidden; }
-
-  /* Gradient text */
-  .gradient-text {
-    background: linear-gradient(135deg, #2D7FF9 0%, #8B46FF 100%);
+  /* Accent gradient text */
+  .kp-accent-text {
+    background: linear-gradient(135deg, var(--accent) 0%, #8794D0 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-  .gradient-text-warm {
-    background: linear-gradient(135deg, #FF6F2C 0%, #F82B60 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: transparent;
   }
 
-  /* Glass morphism */
-  .glass {
-    background: rgba(255,255,255,0.75);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255,255,255,0.9);
-  }
+  /* Gradient text (legacy) */
+  .gradient-text { @apply kp-accent-text; }
 
-  /* Animated gradient border */
-  .gradient-border {
+  /* Aurora background */
+  .kp-aurora {
+    position: absolute; inset: 0;
     background:
-      linear-gradient(white, white) padding-box,
-      linear-gradient(135deg, #2D7FF9, #8B46FF, #06A77D) border-box;
-    border: 2px solid transparent;
+      radial-gradient(50% 40% at 80% 0%, rgba(93,107,181,0.22), transparent 60%),
+      radial-gradient(40% 50% at 10% 100%, rgba(93,107,181,0.14), transparent 60%),
+      radial-gradient(30% 30% at 100% 60%, rgba(155,165,210,0.18), transparent 60%);
+    pointer-events: none;
   }
+
+  /* Grid background */
+  .kp-grid-bg {
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: -1px -1px;
+  }
+
+  /* Logo mark */
+  .kp-logo-mark {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: var(--accent-fg);
+    @apply inline-flex items-center justify-center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: -0.04em;
+    box-shadow: 0 2px 6px rgba(93,107,181,0.35);
+  }
+
+  /* Live pulse dot */
+  .kp-pulse { animation: kpPulse 1.6s ease-in-out infinite; }
+
+  /* Marquee track */
+  .kp-marquee-track {
+    display: flex; gap: 48px; white-space: nowrap;
+    animation: kpMarquee 40s linear infinite;
+    width: max-content;
+  }
+
+  /* Float badge */
+  .kp-float { animation: kpFloat 4s ease-in-out infinite; }
 }
 
-/* ── Background hero gradient ─────────────────────────────── */
-.hero-gradient {
-  background:
-    radial-gradient(ellipse 90% 70% at 60% 0%, rgba(45,127,249,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 60% at 10% 90%, rgba(139,70,255,0.05) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 90% 80%, rgba(6,167,125,0.04) 0%, transparent 50%);
+/* ── Keyframes ─────────────────────────────────────────────── */
+@keyframes kpPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .4; transform: scale(.9); }
+}
+@keyframes kpMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes kpFloat {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-6px); }
+}
+@keyframes kpAurora {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%     { transform: translate(-3%,2%) scale(1.05); }
+}
+@keyframes fadeUp {
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
 }
 
-/* ── Floating orb blobs ───────────────────────────────────── */
-.orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(60px);
-  opacity: 0.35;
-  pointer-events: none;
-}
-
-/* ── Staggered animation delay helpers ───────────────────── */
+/* ── Stagger delays ────────────────────────────────────────── */
 .delay-75  { animation-delay:  75ms; }
 .delay-150 { animation-delay: 150ms; }
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
-.delay-600 { animation-delay: 600ms; }
-.delay-700 { animation-delay: 700ms; }

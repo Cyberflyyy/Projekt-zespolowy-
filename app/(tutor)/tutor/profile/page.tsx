@@ -18,20 +18,20 @@ export default async function TutorProfileEditorPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Profil publiczny"
+        eyebrow="// profil · public.edit"
         title="Edycja profilu"
         description="Te informacje zobaczą uczniowie przeglądający Twój profil."
         action={
           <form action={togglePublishedAction}>
             <input type="hidden" name="is_published" value={tp?.is_published ? "false" : "true"} />
-            <button className={tp?.is_published ? "notion-btn-secondary" : "notion-btn-primary"}>
+            <button className={tp?.is_published ? "kp-btn kp-btn-secondary" : "kp-btn kp-btn-primary"}>
               {tp?.is_published ? "Ukryj profil" : "Opublikuj profil"}
             </button>
           </form>
         }
       />
 
-      <div className="mb-6 flex items-center gap-2">
+      <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
         <Badge tone={tp?.is_published ? "green" : "yellow"}>
           {tp?.is_published ? "Opublikowany" : "Szkic"}
         </Badge>
@@ -41,15 +41,21 @@ export default async function TutorProfileEditorPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-        <form action={saveTutorProfileAction} className="notion-card p-6 space-y-5">
-          <Field label="Nagłówek (tytuł)" name="headline" defaultValue={tp?.headline ?? ""} placeholder="Matematyka — matura podstawowa i rozszerzona" />
-          <div className="space-y-1.5">
-            <label className="text-sm">Bio</label>
+        <form action={saveTutorProfileAction} className="kp-card p-6" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <Field
+            label="Nagłówek (tytuł)"
+            name="headline"
+            defaultValue={tp?.headline ?? ""}
+            placeholder="Matematyka — matura podstawowa i rozszerzona"
+          />
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <label style={{ fontSize: 13, fontWeight: 500, color: "var(--fg-2)" }}>Bio</label>
             <textarea
               name="bio"
               defaultValue={tp?.bio ?? ""}
               rows={6}
-              className="notion-input"
+              className="kp-input"
+              style={{ height: "auto", paddingTop: 10, paddingBottom: 10, resize: "vertical" }}
               placeholder="Opowiedz o swoim doświadczeniu, metodyce, sukcesach uczniów..."
             />
           </div>
@@ -60,9 +66,9 @@ export default async function TutorProfileEditorPage() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-1.5">
-              <label className="text-sm">Forma</label>
-              <select name="lesson_format" defaultValue={tp?.lesson_format ?? "online"} className="notion-input">
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <label style={{ fontSize: 13, fontWeight: 500, color: "var(--fg-2)" }}>Forma</label>
+              <select name="lesson_format" defaultValue={tp?.lesson_format ?? "online"} className="kp-input">
                 <option value="online">Online</option>
                 <option value="in_person">Stacjonarnie</option>
                 <option value="both">Online i stacjonarnie</option>
@@ -78,24 +84,26 @@ export default async function TutorProfileEditorPage() {
             placeholder="Polski, Angielski"
           />
 
-          <button className="notion-btn-primary">Zapisz zmiany</button>
+          <button className="kp-btn kp-btn-primary" style={{ alignSelf: "flex-start" }}>
+            Zapisz zmiany
+          </button>
         </form>
 
-        <aside className="space-y-6">
-          <div className="notion-card p-6">
-            <p className="text-xs uppercase tracking-widest text-ink-subtle">Zdjęcie profilowe</p>
-            <div className="mt-4 flex items-center gap-4">
+        <aside style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <div className="kp-card p-6">
+            <div className="kp-eyebrow" style={{ marginBottom: 16 }}>// zdjęcie profilowe</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
               <Avatar src={profile.avatar_url} name={profile.full_name} size={64} />
-              <form action={uploadAvatarAction}>
-                <input type="file" name="file" accept="image/*" className="text-xs" />
-                <button className="notion-btn-secondary mt-3">Wgraj nowe zdjęcie</button>
+              <form action={uploadAvatarAction} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <input type="file" name="file" accept="image/*" style={{ fontSize: 12, color: "var(--fg-3)" }} />
+                <button className="kp-btn kp-btn-secondary kp-btn-sm">Wgraj nowe zdjęcie</button>
               </form>
             </div>
           </div>
 
-          <div className="notion-card p-6 text-sm text-ink-muted">
-            <p className="text-xs uppercase tracking-widest text-ink-subtle">Podpowiedź</p>
-            <p className="mt-2">
+          <div className="kp-card p-6">
+            <div className="kp-eyebrow" style={{ marginBottom: 8 }}>// podpowiedź</div>
+            <p style={{ fontSize: 13, color: "var(--fg-3)", lineHeight: 1.6 }}>
               Profile z uzupełnionym bio, zdjęciem i co najmniej jedną ofertą są 4× częściej wybierane przez uczniów.
             </p>
           </div>
@@ -119,9 +127,9 @@ function Field({
   placeholder?: string;
 }) {
   return (
-    <div className="space-y-1.5">
-      <label htmlFor={name} className="text-sm">{label}</label>
-      <input id={name} name={name} type={type} defaultValue={defaultValue} placeholder={placeholder} className="notion-input" />
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <label htmlFor={name} style={{ fontSize: 13, fontWeight: 500, color: "var(--fg-2)" }}>{label}</label>
+      <input id={name} name={name} type={type} defaultValue={defaultValue} placeholder={placeholder} className="kp-input" />
     </div>
   );
 }

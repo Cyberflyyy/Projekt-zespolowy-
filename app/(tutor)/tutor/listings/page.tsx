@@ -21,65 +21,74 @@ export default async function TutorListingsPage() {
 
   return (
     <div>
-      <PageHeader eyebrow="Oferty" title="Twoje oferty" description="Utwórz ofertę dla każdego przedmiotu, który prowadzisz." />
+      <PageHeader
+        eyebrow="// oferty · listings.manage"
+        title="Twoje oferty"
+        description="Utwórz ofertę dla każdego przedmiotu, który prowadzisz."
+      />
 
-      <form action={createListingAction} className="notion-card p-6 mb-8 grid gap-4 md:grid-cols-5">
-        <select name="subject_id" required className="notion-input md:col-span-1">
+      <form action={createListingAction} className="kp-card p-6 mb-8 grid gap-4 md:grid-cols-5">
+        <select name="subject_id" required className="kp-input md:col-span-1">
           <option value="">Przedmiot</option>
           {(subjects ?? []).map((s) => (
             <option key={s.id} value={s.id}>{s.name}</option>
           ))}
         </select>
-        <input name="title" placeholder="Tytuł oferty" required className="notion-input md:col-span-2" />
-        <input name="price" type="number" min={500} step={100} placeholder="Cena (grosze)" required className="notion-input" />
-        <select name="level" className="notion-input">
+        <input name="title" placeholder="Tytuł oferty" required className="kp-input md:col-span-2" />
+        <input name="price" type="number" min={500} step={100} placeholder="Cena (grosze)" required className="kp-input" />
+        <select name="level" className="kp-input">
           <option value="primary">Podstawówka</option>
           <option value="secondary">Liceum (kl. 1–2)</option>
-          <option value="high_school" selected>Matura</option>
+          <option value="high_school">Matura</option>
           <option value="university">Studia</option>
           <option value="adult">Dorośli</option>
         </select>
-        <textarea name="description" placeholder="Opis (opcjonalnie)" className="notion-input md:col-span-4" rows={2} />
-        <input name="duration_minutes" type="number" defaultValue={60} min={30} step={15} className="notion-input" />
+        <textarea name="description" placeholder="Opis (opcjonalnie)" className="kp-input md:col-span-4" rows={2} style={{ height: "auto", paddingTop: 8 }} />
+        <input name="duration_minutes" type="number" defaultValue={60} min={30} step={15} className="kp-input" />
         <div className="md:col-span-5">
-          <button className="notion-btn-primary">Dodaj ofertę</button>
+          <button className="kp-btn kp-btn-primary">Dodaj ofertę</button>
         </div>
       </form>
 
-      <div className="space-y-3">
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {(listings ?? []).map((l) => (
-          <div key={l.id} className="notion-card p-5 flex flex-wrap items-center justify-between gap-4">
+          <div key={l.id} className="kp-card p-5" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
             <div>
-              <div className="flex items-center gap-2">
-                <p className="font-medium text-ink">{l.title}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                <p style={{ fontSize: 14, fontWeight: 600, color: "var(--fg)" }}>{l.title}</p>
                 <Badge tone={l.is_active ? "green" : "neutral"}>
                   {l.is_active ? "Aktywna" : "Wyłączona"}
                 </Badge>
               </div>
-              <p className="mt-1 text-xs text-ink-muted">
+              <p style={{ fontSize: 12, color: "var(--fg-3)" }}>
                 {l.subjects.name} · {l.duration_minutes} min · {formatMoney(l.price, l.currency)}
               </p>
               {l.description && (
-                <p className="mt-2 text-sm text-ink-muted line-clamp-2 max-w-prose">{l.description}</p>
+                <p style={{ marginTop: 6, fontSize: 13, color: "var(--fg-3)", maxWidth: "60ch" }}
+                   className="line-clamp-2">
+                  {l.description}
+                </p>
               )}
             </div>
-            <div className="flex gap-2">
+            <div style={{ display: "flex", gap: 8 }}>
               <form action={toggleListingAction}>
                 <input type="hidden" name="id" value={l.id} />
                 <input type="hidden" name="is_active" value={l.is_active ? "false" : "true"} />
-                <button className="notion-btn-secondary">{l.is_active ? "Wyłącz" : "Włącz"}</button>
+                <button className="kp-btn kp-btn-secondary">{l.is_active ? "Wyłącz" : "Włącz"}</button>
               </form>
               <form action={deleteListingAction}>
                 <input type="hidden" name="id" value={l.id} />
-                <button className="notion-btn-ghost text-accent-red">Usuń</button>
+                <button className="kp-btn kp-btn-ghost" style={{ color: "var(--danger)" }}>Usuń</button>
               </form>
             </div>
           </div>
         ))}
         {(listings ?? []).length === 0 && (
-          <div className="notion-card p-10 text-center">
-            <p className="font-serif text-heading-3">Brak ofert</p>
-            <p className="mt-1 text-sm text-ink-muted">Dodaj pierwszą ofertę, aby uczniowie mogli Cię zarezerwować.</p>
+          <div className="kp-card p-10 text-center">
+            <p style={{ fontSize: "1.375rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--fg)" }}>Brak ofert</p>
+            <p style={{ marginTop: 6, fontSize: 13, color: "var(--fg-3)" }}>
+              Dodaj pierwszą ofertę, aby uczniowie mogli Cię zarezerwować.
+            </p>
           </div>
         )}
       </div>

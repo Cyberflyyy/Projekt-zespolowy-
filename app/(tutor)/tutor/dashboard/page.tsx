@@ -28,16 +28,16 @@ export default async function TutorDashboardPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Panel korepetytora"
+        eyebrow="// panel · tutor.dashboard"
         title={`Witaj, ${profile.full_name?.split(" ")[0] ?? "Korepetytorze"}!`}
         description="Zarządzaj profilem, ofertami, dostępnością i wypłatami."
         action={
           !tp?.stripe_onboarded ? (
-            <Link href="/tutor/payouts" className="notion-btn-primary">
+            <Link href="/tutor/payouts" className="kp-btn kp-btn-primary">
               Dokończ konfigurację wypłat
             </Link>
           ) : !tp?.is_published ? (
-            <Link href="/tutor/profile" className="notion-btn-primary">
+            <Link href="/tutor/profile" className="kp-btn kp-btn-primary">
               Opublikuj profil
             </Link>
           ) : null
@@ -55,21 +55,35 @@ export default async function TutorDashboardPage() {
         />
       </div>
 
-      <div className="notion-card mt-8 p-6">
-        <h3 className="font-serif text-heading-3">Najbliższe lekcje</h3>
+      <div className="kp-card mt-8 p-6" style={{ boxShadow: "var(--shadow-sm)" }}>
+        <div className="kp-eyebrow" style={{ marginBottom: 8 }}>// nadchodzące lekcje</div>
+        <h3 style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--fg)" }}>
+          Najbliższe lekcje
+        </h3>
         {upcoming.length === 0 ? (
-          <p className="mt-3 text-sm text-ink-muted">Brak zaplanowanych lekcji.</p>
+          <p style={{ marginTop: 12, fontSize: 13, color: "var(--fg-3)" }}>Brak zaplanowanych lekcji.</p>
         ) : (
-          <ul className="mt-4 divide-y divide-line">
+          <ul style={{ marginTop: 16, borderTop: "1px solid var(--border)", listStyle: "none", padding: 0, margin: 0 }}>
             {upcoming.slice(0, 5).map((b) => (
-              <li key={b.id} className="py-3 flex items-center justify-between">
+              <li
+                key={b.id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "12px 0",
+                  borderBottom: "1px solid var(--border)",
+                }}
+              >
                 <div>
-                  <p className="text-sm font-medium text-ink">{b.listing?.title}</p>
-                  <p className="text-xs text-ink-muted">
+                  <p style={{ fontSize: 13, fontWeight: 600, color: "var(--fg)" }}>{b.listing?.title}</p>
+                  <p style={{ fontSize: 12, color: "var(--fg-3)", marginTop: 2 }}>
                     z {b.student?.full_name} · {b.slot && formatDateShort(b.slot.starts_at)}
                   </p>
                 </div>
-                <span className="text-sm text-ink">{formatMoney(b.tutor_share, b.currency)}</span>
+                <span className="kp-mono" style={{ fontSize: 13, color: "var(--fg-2)" }}>
+                  {formatMoney(b.tutor_share, b.currency)}
+                </span>
               </li>
             ))}
           </ul>

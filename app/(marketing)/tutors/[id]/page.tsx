@@ -4,7 +4,6 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Footer } from "@/components/layout/Footer";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
-import { Separator } from "@/components/ui/Separator";
 import { AvailabilityPicker } from "@/components/marketplace/AvailabilityPicker";
 import { getTutor } from "@/lib/db/tutors";
 import { listUpcomingSlots } from "@/lib/db/availability";
@@ -46,14 +45,26 @@ export default async function TutorDetailsPage({
     <>
       <SiteHeader />
       <div className="container py-10 max-w-content">
-        <div className="grid gap-10 lg:grid-cols-[1fr_380px]">
-          <article className="min-w-0">
-            <div className="flex items-start gap-5">
-              <Avatar src={tutor.profiles.avatar_url} name={tutor.profiles.full_name} size={96} />
-              <div>
-                <h1 className="font-serif text-display text-ink">{tutor.profiles.full_name}</h1>
-                <p className="mt-1 text-ink-muted">{tutor.headline}</p>
-                <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+        <div className="grid gap-10 lg:grid-cols-[1fr_380px]" style={{ alignItems: "start" }}>
+          <article style={{ minWidth: 0 }}>
+            {/* Profile header card */}
+            <div className="kp-card p-6" style={{ display: "flex", gap: 20, alignItems: "flex-start", marginBottom: 20 }}>
+              <Avatar src={tutor.profiles.avatar_url} name={tutor.profiles.full_name} size={80} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="kp-eyebrow" style={{ marginBottom: 6 }}>// profil korepetytora</div>
+                <h1
+                  style={{
+                    fontSize: 24,
+                    fontWeight: 700,
+                    letterSpacing: "-0.03em",
+                    color: "var(--fg)",
+                    marginBottom: 4,
+                  }}
+                >
+                  {tutor.profiles.full_name}
+                </h1>
+                <p style={{ fontSize: 14, color: "var(--fg-3)", marginBottom: 12 }}>{tutor.headline}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   <Badge tone="neutral">
                     ★ {Number(tutor.rating_avg).toFixed(1)} ({tutor.rating_count})
                   </Badge>
@@ -66,64 +77,116 @@ export default async function TutorDetailsPage({
               </div>
             </div>
 
-            <Separator className="my-8" />
-
-            <section>
-              <h2 className="font-serif text-heading-2">O mnie</h2>
-              <div className="notion-prose mt-4 whitespace-pre-line">
+            {/* Bio card */}
+            <div className="kp-card p-6" style={{ marginBottom: 20 }}>
+              <div className="kp-eyebrow" style={{ marginBottom: 10 }}>// o mnie</div>
+              <h2
+                style={{
+                  fontSize: 17,
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--fg)",
+                  marginBottom: 12,
+                }}
+              >
+                O mnie
+              </h2>
+              <p style={{ fontSize: 14, color: "var(--fg-2)", lineHeight: 1.75, whiteSpace: "pre-line" }}>
                 {tutor.bio ?? "Korepetytor nie uzupełnił jeszcze opisu."}
-              </div>
-            </section>
+              </p>
+            </div>
 
-            <Separator className="my-8" />
-
-            <section>
-              <h2 className="font-serif text-heading-2">Oferty</h2>
+            {/* Listings card */}
+            <div className="kp-card p-6" style={{ marginBottom: 20 }}>
+              <div className="kp-eyebrow" style={{ marginBottom: 10 }}>// oferty</div>
+              <h2
+                style={{
+                  fontSize: 17,
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--fg)",
+                  marginBottom: 16,
+                }}
+              >
+                Oferty
+              </h2>
               {activeListings.length === 0 ? (
-                <p className="mt-4 text-sm text-ink-muted">Brak aktywnych ofert.</p>
+                <p style={{ fontSize: 13, color: "var(--fg-3)" }}>Brak aktywnych ofert.</p>
               ) : (
-                <div className="mt-4 space-y-3">
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {activeListings.map((l) => (
-                    <div key={l.id} className="notion-card p-5">
-                      <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div
+                      key={l.id}
+                      style={{
+                        padding: 16,
+                        background: "var(--surface-2)",
+                        borderRadius: 8,
+                        border: "1px solid var(--border)",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          gap: 16,
+                          flexWrap: "wrap",
+                          alignItems: "flex-start",
+                        }}
+                      >
                         <div>
-                          <p className="font-medium text-ink">{l.title}</p>
-                          <p className="mt-1 text-xs text-ink-muted">
+                          <p style={{ fontSize: 14, fontWeight: 600, color: "var(--fg)", marginBottom: 4 }}>
+                            {l.title}
+                          </p>
+                          <p style={{ fontSize: 12, color: "var(--fg-3)" }}>
                             {l.subjects.name} · {l.duration_minutes} min · poziom {l.level}
                           </p>
                           {l.description && (
-                            <p className="mt-3 text-sm text-ink-muted max-w-prose">{l.description}</p>
+                            <p style={{ marginTop: 8, fontSize: 13, color: "var(--fg-3)", maxWidth: "48ch" }}>
+                              {l.description}
+                            </p>
                           )}
                         </div>
-                        <div className="text-right">
-                          <p className="font-serif text-heading-2 text-ink">
+                        <div style={{ textAlign: "right", flexShrink: 0 }}>
+                          <p
+                            className="kp-mono"
+                            style={{ fontSize: 22, fontWeight: 700, color: "var(--fg)", letterSpacing: "-0.03em" }}
+                          >
                             {formatMoney(l.price, l.currency)}
                           </p>
-                          <p className="text-xs text-ink-subtle">za lekcję</p>
+                          <p style={{ fontSize: 11, color: "var(--fg-4)", marginTop: 2 }}>za lekcję</p>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
               )}
-            </section>
+            </div>
 
+            {/* Languages card */}
             {tutor.languages?.length > 0 && (
-              <>
-                <Separator className="my-8" />
-                <section>
-                  <h2 className="font-serif text-heading-2">Języki</h2>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {tutor.languages.map((l) => (
-                      <Badge key={l} tone="neutral">{l}</Badge>
-                    ))}
-                  </div>
-                </section>
-              </>
+              <div className="kp-card p-6">
+                <div className="kp-eyebrow" style={{ marginBottom: 10 }}>// języki</div>
+                <h2
+                  style={{
+                    fontSize: 17,
+                    fontWeight: 600,
+                    letterSpacing: "-0.02em",
+                    color: "var(--fg)",
+                    marginBottom: 12,
+                  }}
+                >
+                  Języki
+                </h2>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {tutor.languages.map((l) => (
+                    <Badge key={l} tone="neutral">{l}</Badge>
+                  ))}
+                </div>
+              </div>
             )}
           </article>
 
-          <aside>
+          <aside style={{ position: "sticky", top: 80 }}>
             <AvailabilityPicker
               slots={slots}
               listings={activeListings}

@@ -12,14 +12,35 @@ export function PageHeader({
   action?: ReactNode;
 }) {
   return (
-    <header className="flex items-start justify-between gap-6 pb-6 border-b border-line mb-8">
+    <header
+      style={{
+        display: "flex",
+        alignItems: "flex-start",
+        justifyContent: "space-between",
+        gap: 24,
+        paddingBottom: 24,
+        borderBottom: "1px solid var(--border)",
+        marginBottom: 32,
+      }}
+    >
       <div>
         {eyebrow && (
-          <p className="text-xs uppercase tracking-widest text-ink-subtle mb-2">{eyebrow}</p>
+          <div className="kp-eyebrow" style={{ marginBottom: 8 }}>{eyebrow}</div>
         )}
-        <h1 className="font-serif text-heading-1 text-ink">{title}</h1>
+        <h1
+          style={{
+            fontSize: 26,
+            fontWeight: 700,
+            letterSpacing: "-0.03em",
+            color: "var(--fg)",
+          }}
+        >
+          {title}
+        </h1>
         {description && (
-          <p className="mt-2 max-w-prose text-sm text-ink-muted">{description}</p>
+          <p style={{ marginTop: 6, maxWidth: "56ch", fontSize: 14, color: "var(--fg-3)", lineHeight: 1.6 }}>
+            {description}
+          </p>
         )}
       </div>
       {action}

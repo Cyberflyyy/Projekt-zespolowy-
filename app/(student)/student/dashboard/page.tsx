@@ -21,11 +21,11 @@ export default async function StudentDashboardPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Panel ucznia"
+        eyebrow="// panel · student.dashboard"
         title={`Cześć, ${profile.full_name?.split(" ")[0] ?? "uczniu"}!`}
         description="Zarządzaj rezerwacjami, przeglądaj historię płatności i znajdź nowych korepetytorów."
         action={
-          <Link href="/tutors" className="notion-btn-primary">
+          <Link href="/tutors" className="kp-btn kp-btn-primary">
             Znajdź korepetytora
           </Link>
         }
@@ -37,23 +37,40 @@ export default async function StudentDashboardPage() {
         <StatCard label="Wydano" value={formatMoney(totalSpent)} hint="za lekcje" />
       </div>
 
-      <div className="notion-card mt-8 p-6">
-        <h3 className="font-serif text-heading-3">Najbliższa lekcja</h3>
+      <div className="kp-card mt-8 p-6" style={{ boxShadow: "var(--shadow-sm)" }}>
+        <div className="kp-eyebrow" style={{ marginBottom: 8 }}>// najbliższa lekcja</div>
+        <h3 style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--fg)" }}>
+          Najbliższa lekcja
+        </h3>
         {next ? (
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+          <div
+            style={{
+              marginTop: 16,
+              paddingTop: 16,
+              borderTop: "1px solid var(--border)",
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 16,
+            }}
+          >
             <div>
-              <p className="font-medium text-ink">{next.listing?.title ?? "Lekcja"}</p>
-              <p className="mt-1 text-sm text-ink-muted">
+              <p style={{ fontSize: 14, fontWeight: 600, color: "var(--fg)" }}>{next.listing?.title ?? "Lekcja"}</p>
+              <p style={{ fontSize: 13, color: "var(--fg-3)", marginTop: 4 }}>
                 z {next.tutor?.full_name} · {next.slot && formatDateShort(next.slot.starts_at)}
               </p>
             </div>
-            <Link href={`/student/bookings/${next.id}`} className="notion-btn-secondary">
+            <Link href={`/student/bookings/${next.id}`} className="kp-btn kp-btn-secondary">
               Szczegóły
             </Link>
           </div>
         ) : (
-          <p className="mt-3 text-sm text-ink-muted">
-            Nie masz jeszcze zaplanowanych lekcji. <Link href="/tutors" className="notion-link">Znajdź korepetytora</Link>.
+          <p style={{ marginTop: 12, fontSize: 13, color: "var(--fg-3)" }}>
+            Nie masz jeszcze zaplanowanych lekcji.{" "}
+            <Link href="/tutors" style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 500 }}>
+              Znajdź korepetytora
+            </Link>.
           </p>
         )}
       </div>

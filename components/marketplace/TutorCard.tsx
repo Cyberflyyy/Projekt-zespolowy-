@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Avatar } from "@/components/ui/Avatar";
-import { Badge } from "@/components/ui/Badge";
 import { formatMoney } from "@/lib/utils/format";
 import type { TutorListRow } from "@/lib/db/tutors";
 
@@ -14,40 +13,42 @@ export function TutorCard({ tutor }: { tutor: TutorListRow }) {
   return (
     <Link
       href={`/tutors/${tutor.user_id}`}
-      className="notion-card flex flex-col p-5 hover:border-line-hover"
+      className="kp-card kp-card-hover"
+      style={{ padding: 18, display: "flex", flexDirection: "column", gap: 12, textDecoration: "none", height: "100%" }}
     >
-      <div className="flex items-start gap-4">
-        <Avatar src={tutor.profiles.avatar_url} name={tutor.profiles.full_name} size={56} />
-        <div className="min-w-0 flex-1">
-          <p className="truncate font-medium text-ink">{tutor.profiles.full_name}</p>
-          <p className="text-xs text-ink-muted">
-            {tutor.city ?? "—"} · {tutor.years_experience} lat doświadczenia
-          </p>
-          <div className="mt-1 text-sm text-ink-muted">
-            ★ {Number(tutor.rating_avg).toFixed(1)}
-            <span className="text-ink-subtle"> ({tutor.rating_count})</span>
+      <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+        <Avatar src={tutor.profiles.avatar_url} name={tutor.profiles.full_name} size={40} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 14, fontWeight: 600, letterSpacing: "-0.01em", color: "var(--fg)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            {tutor.profiles.full_name}
+          </div>
+          <div style={{ fontSize: 11, color: "var(--fg-4)", fontFamily: "var(--font-mono)", marginTop: 2 }}>
+            {tutor.city ?? "—"} · {tutor.years_experience} lat
           </div>
         </div>
       </div>
 
       {tutor.headline && (
-        <p className="mt-4 text-sm text-ink line-clamp-3 min-h-[60px]">{tutor.headline}</p>
+        <p style={{ fontSize: 13, color: "var(--fg-2)", lineHeight: 1.45, minHeight: 38 }}>
+          {tutor.headline}
+        </p>
       )}
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <Badge tone="neutral">{FORMAT_LABEL[tutor.lesson_format]}</Badge>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+        <span className="kp-badge">{FORMAT_LABEL[tutor.lesson_format]}</span>
         {tutor.languages?.slice(0, 2).map((l) => (
-          <Badge key={l} tone="neutral">
-            {l}
-          </Badge>
+          <span key={l} className="kp-badge" style={{ background: "var(--surface)" }}>{l}</span>
         ))}
       </div>
 
-      <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-        <span className="text-xs text-ink-subtle">od</span>
-        <span className="font-serif text-heading-3 text-ink">
+      <div style={{ marginTop: "auto", paddingTop: 12, borderTop: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <span style={{ fontSize: 12, color: "var(--fg-3)" }}>
+          ★ <span className="kp-mono" style={{ fontWeight: 600, color: "var(--fg)" }}>{Number(tutor.rating_avg).toFixed(1)}</span>
+          <span style={{ color: "var(--fg-4)" }}> ({tutor.rating_count})</span>
+        </span>
+        <span className="kp-mono" style={{ fontSize: 14, fontWeight: 600, color: "var(--fg)" }}>
           {formatMoney(tutor.hourly_rate, tutor.currency)}
-          <span className="text-sm text-ink-muted"> / h</span>
+          <span style={{ fontSize: 11, color: "var(--fg-4)", fontWeight: 400 }}> / h</span>
         </span>
       </div>
     </Link>

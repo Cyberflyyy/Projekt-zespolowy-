@@ -28,7 +28,8 @@ export function DashboardShell({
       <div className="flex">
         <aside className="hidden md:flex w-60 shrink-0 border-r border-line bg-canvas min-h-screen flex-col">
           <div className="px-5 py-4 border-b border-line">
-            <Link href="/" className="font-serif text-lg font-semibold text-ink">
+            <Link href="/" className="kp-nav-brand">
+              <span className="kp-logo-mark">K</span>
               Korepetytorzy
             </Link>
             <p className="mt-0.5 text-xs text-ink-subtle">{ROLE_LABELS[profile.role]}</p>
@@ -62,7 +63,7 @@ export function DashboardShell({
               </div>
             </div>
             <form action={signOutAction}>
-              <button className="notion-btn-ghost w-full justify-start mt-1 text-xs">
+              <button className="kp-btn kp-btn-ghost w-full justify-start mt-1 text-xs">
                 Wyloguj się
               </button>
             </form>

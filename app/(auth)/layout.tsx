@@ -3,13 +3,14 @@ import type { ReactNode } from "react";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-surface flex flex-col">
-      <header className="border-b border-line bg-canvas">
+    <div className="min-h-screen flex flex-col" style={{ background: "var(--surface-2)" }}>
+      <header style={{ borderBottom: "1px solid var(--border)", background: "var(--surface)" }}>
         <div className="container flex h-14 items-center justify-between">
-          <Link href="/" className="font-serif text-lg font-semibold text-ink">
+          <Link href="/" className="kp-nav-brand">
+            <span className="kp-logo-mark">K</span>
             Korepetytorzy
           </Link>
-          <Link href="/tutors" className="text-sm text-ink-muted hover:text-ink">
+          <Link href="/tutors" className="kp-nav-link">
             Przeglądaj korepetytorów
           </Link>
         </div>

@@ -10,37 +10,46 @@ export function LoginForm() {
   const next = useSearchParams().get("next") ?? "";
 
   return (
-    <form action={action} className="notion-card p-8 space-y-6">
-      <div>
-        <h1 className="font-serif text-heading-1">Zaloguj się</h1>
-        <p className="mt-1 text-sm text-ink-muted">
+    <form action={action} className="kp-card p-8" style={{ boxShadow: "var(--shadow-md)" }}>
+      <div style={{ marginBottom: 24 }}>
+        <div className="kp-eyebrow" style={{ marginBottom: 8 }}>// konto · auth.login</div>
+        <h1 style={{ fontSize: 24, fontWeight: 700, letterSpacing: "-0.03em", color: "var(--fg)", marginBottom: 4 }}>
+          Zaloguj się
+        </h1>
+        <p style={{ fontSize: 13, color: "var(--fg-3)" }}>
           Witaj z powrotem. Wpisz dane konta, aby kontynuować.
         </p>
       </div>
 
       <input type="hidden" name="next" value={next} />
 
-      <div className="space-y-1.5">
-        <label htmlFor="email" className="text-sm text-ink">E-mail</label>
-        <input id="email" name="email" type="email" autoComplete="email" required className="notion-input" />
-      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <label htmlFor="email" style={{ fontSize: 13, fontWeight: 500, color: "var(--fg-2)" }}>E-mail</label>
+          <input id="email" name="email" type="email" autoComplete="email" required className="kp-input" />
+        </div>
 
-      <div className="space-y-1.5">
-        <label htmlFor="password" className="text-sm text-ink">Hasło</label>
-        <input id="password" name="password" type="password" autoComplete="current-password" required className="notion-input" />
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <label htmlFor="password" style={{ fontSize: 13, fontWeight: 500, color: "var(--fg-2)" }}>Hasło</label>
+          <input id="password" name="password" type="password" autoComplete="current-password" required className="kp-input" />
+        </div>
       </div>
 
       {state?.error && (
-        <p className="text-sm text-accent-red bg-accent-red-soft px-3 py-2 rounded">{state.error}</p>
+        <div style={{ marginBottom: 16, padding: "8px 12px", background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 6, fontSize: 13, color: "var(--danger)" }}>
+          {state.error}
+        </div>
       )}
 
-      <button type="submit" disabled={pending} className="notion-btn-primary w-full">
+      <button type="submit" disabled={pending} className="kp-btn kp-btn-primary kp-btn-lg" style={{ width: "100%", marginBottom: 16 }}>
         {pending ? "Logowanie..." : "Zaloguj się"}
       </button>
 
-      <p className="text-sm text-ink-muted text-center">
+      <p style={{ textAlign: "center", fontSize: 13, color: "var(--fg-3)" }}>
         Nie masz konta?{" "}
-        <Link href="/register" className="notion-link">Zarejestruj się</Link>
+        <Link href="/register" style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 500 }}>
+          Zarejestruj się
+        </Link>
       </p>
     </form>
   );
