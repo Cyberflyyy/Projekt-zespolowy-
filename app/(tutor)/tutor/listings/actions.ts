@@ -15,7 +15,7 @@ export async function createListingAction(formData: FormData) {
     description: String(formData.get("description") ?? "") || null,
     level: String(formData.get("level") ?? "high_school") as
       | "primary" | "secondary" | "high_school" | "university" | "adult",
-    price: Number(formData.get("price") ?? 0),
+    price: Math.round(Number(formData.get("price") ?? 0) * 100),
     duration_minutes: Number(formData.get("duration_minutes") ?? 60),
     currency: process.env.DEFAULT_CURRENCY ?? "pln",
     is_active: true,

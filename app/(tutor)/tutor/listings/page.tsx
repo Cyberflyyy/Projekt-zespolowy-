@@ -35,7 +35,7 @@ export default async function TutorListingsPage() {
           ))}
         </select>
         <input name="title" placeholder="Tytuł oferty" required className="kp-input md:col-span-2" />
-        <input name="price" type="number" min={500} step={100} placeholder="Cena (grosze)" required className="kp-input" />
+        <input name="price" type="number" min={5} step={0.5} placeholder="Cena (zł)" required className="kp-input" />
         <select name="level" className="kp-input">
           <option value="primary">Podstawówka</option>
           <option value="secondary">Liceum (kl. 1–2)</option>

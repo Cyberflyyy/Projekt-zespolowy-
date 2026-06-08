@@ -14,7 +14,7 @@ export async function saveTutorProfileAction(formData: FormData) {
   const patch = {
     headline: String(formData.get("headline") ?? ""),
     bio: String(formData.get("bio") ?? ""),
-    hourly_rate: Number(formData.get("hourly_rate") ?? 0),
+    hourly_rate: Math.round(Number(formData.get("hourly_rate") ?? 0) * 100),
     years_experience: Number(formData.get("years_experience") ?? 0),
     lesson_format: String(formData.get("lesson_format") ?? "online") as "online" | "in_person" | "both",
     city: String(formData.get("city") ?? "") || null,

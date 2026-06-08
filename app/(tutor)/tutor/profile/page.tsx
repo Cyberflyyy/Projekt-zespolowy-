@@ -61,7 +61,7 @@ export default async function TutorProfileEditorPage() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Stawka (w groszach)" type="number" name="hourly_rate" defaultValue={String(tp?.hourly_rate ?? 8000)} />
+            <Field label="Stawka (zł/h)" type="number" name="hourly_rate" defaultValue={String((tp?.hourly_rate ?? 8000) / 100)} />
             <Field label="Lata doświadczenia" type="number" name="years_experience" defaultValue={String(tp?.years_experience ?? 0)} />
           </div>
 
@@ -92,11 +92,11 @@ export default async function TutorProfileEditorPage() {
         <aside style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div className="kp-card p-6">
             <div className="kp-eyebrow" style={{ marginBottom: 16 }}>// zdjęcie profilowe</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16 }}>
               <Avatar src={profile.avatar_url} name={profile.full_name} size={64} />
-              <form action={uploadAvatarAction} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                <input type="file" name="file" accept="image/*" style={{ fontSize: 12, color: "var(--fg-3)" }} />
-                <button className="kp-btn kp-btn-secondary kp-btn-sm">Wgraj nowe zdjęcie</button>
+              <form action={uploadAvatarAction} style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1, minWidth: 0 }}>
+                <input type="file" name="file" accept="image/*" style={{ fontSize: 12, color: "var(--fg-3)", maxWidth: "100%" }} />
+                <button className="kp-btn kp-btn-secondary kp-btn-sm" style={{ alignSelf: "flex-start" }}>Wgraj nowe zdjęcie</button>
               </form>
             </div>
           </div>
