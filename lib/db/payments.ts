@@ -10,7 +10,7 @@ export type PaymentRow = Payment & {
 
 export async function listPaymentsForStudent(studentId: string): Promise<PaymentRow[]> {
   const supabase = await createClient();
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("payments")
     .select(`*, booking:bookings!inner(id, student_id, tutor_id, listing_id,
       tutor:profiles!bookings_tutor_id_fkey(full_name),
@@ -18,12 +18,13 @@ export async function listPaymentsForStudent(studentId: string): Promise<Payment
     .eq("booking.student_id", studentId)
     .order("created_at", { ascending: false })
     .returns<PaymentRow[]>();
+  if (error) console.error("[listPaymentsForStudent]", error.message, error.details);
   return data ?? [];
 }
 
 export async function listEarningsForTutor(tutorId: string): Promise<PaymentRow[]> {
   const supabase = await createClient();
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("payments")
     .select(`*, booking:bookings!inner(id, student_id, tutor_id, listing_id,
       tutor:profiles!bookings_tutor_id_fkey(full_name),
@@ -31,5 +32,6 @@ export async function listEarningsForTutor(tutorId: string): Promise<PaymentRow[
     .eq("booking.tutor_id", tutorId)
     .order("created_at", { ascending: false })
     .returns<PaymentRow[]>();
+  if (error) console.error("[listEarningsForTutor]", error.message, error.details);
   return data ?? [];
 }

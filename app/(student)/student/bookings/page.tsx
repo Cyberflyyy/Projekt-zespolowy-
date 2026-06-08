@@ -5,6 +5,8 @@ import { BookingStatusBadge } from "@/components/dashboard/BookingStatusBadge";
 import { requireRole } from "@/lib/auth/guards";
 import { listBookingsForStudent } from "@/lib/db/bookings";
 import { formatDateShort, formatMoney } from "@/lib/utils/format";
+import { cancelBookingAction } from "./actions";
+import { CancelBookingButton } from "@/components/dashboard/CancelBookingButton";
 
 export default async function StudentBookingsPage() {
   const { profile } = await requireRole("student");
@@ -47,9 +49,14 @@ export default async function StudentBookingsPage() {
                 <Td>{formatMoney(b.amount_total, b.currency)}</Td>
                 <Td><BookingStatusBadge status={b.status} /></Td>
                 <Td className="text-right">
-                  <Link href={`/student/bookings/${b.id}`} className="notion-link text-sm">
-                    Szczegóły →
-                  </Link>
+                  <div className="flex items-center justify-end gap-3">
+                    <Link href={`/student/bookings/${b.id}`} className="notion-link text-sm">
+                      Szczegóły →
+                    </Link>
+                    {(b.status === "pending_payment" || b.status === "confirmed") && (
+                      <CancelBookingButton action={cancelBookingAction} bookingId={b.id} />
+                    )}
+                  </div>
                 </Td>
               </Tr>
             ))}

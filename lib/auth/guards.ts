@@ -1,11 +1,12 @@
+import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import type { Profile, UserRole } from "@/types/database";
 
-export async function getUserAndProfile(): Promise<{
+export const getUserAndProfile = cache(async (): Promise<{
   user: { id: string; email?: string } | null;
   profile: Profile | null;
-}> {
+}> => {
   const supabase = await createClient();
   const {
     data: { user },
@@ -20,7 +21,7 @@ export async function getUserAndProfile(): Promise<{
     .single<Profile>();
 
   return { user, profile };
-}
+});
 
 export async function requireUser() {
   const { user, profile } = await getUserAndProfile();

@@ -18,23 +18,25 @@ const SELECT = `
 
 export async function listBookingsForStudent(studentId: string): Promise<BookingRow[]> {
   const supabase = await createClient();
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("bookings")
     .select(SELECT)
     .eq("student_id", studentId)
     .order("created_at", { ascending: false })
     .returns<BookingRow[]>();
+  if (error) console.error("[listBookingsForStudent]", error.message, error.details);
   return data ?? [];
 }
 
 export async function listBookingsForTutor(tutorId: string): Promise<BookingRow[]> {
   const supabase = await createClient();
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("bookings")
     .select(SELECT)
     .eq("tutor_id", tutorId)
     .order("created_at", { ascending: false })
     .returns<BookingRow[]>();
+  if (error) console.error("[listBookingsForTutor]", error.message, error.details);
   return data ?? [];
 }
 

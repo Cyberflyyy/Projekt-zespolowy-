@@ -82,32 +82,6 @@ export async function SiteHeader() {
 
         {/* Right side */}
         <div className="flex items-center" style={{ gap: 8 }}>
-          {/* Search hint — hidden on mobile */}
-          <div
-            className="hidden lg:flex items-center"
-            style={{
-              gap: 8,
-              padding: "0 10px",
-              height: 32,
-              border: "1px solid var(--border)",
-              borderRadius: 8,
-              background: "var(--surface)",
-              color: "var(--fg-4)",
-              fontSize: 12,
-              minWidth: 200,
-              cursor: "pointer",
-            }}
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
-            </svg>
-            <span>Szukaj korepetytora…</span>
-            <span style={{ marginLeft: "auto", display: "flex", gap: 2 }}>
-              <span className="kp-kbd">⌘</span>
-              <span className="kp-kbd">K</span>
-            </span>
-          </div>
-
           {profile ? (
             <Link
               href={ROLE_HOME[profile.role]}

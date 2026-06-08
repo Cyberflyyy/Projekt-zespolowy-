@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import type { Listing, Profile, Subject, TutorProfile } from "@/types/database";
 
@@ -58,7 +59,7 @@ export type TutorDetail = TutorProfile & {
   listings: (Listing & { subjects: Pick<Subject, "name" | "slug" | "category"> })[];
 };
 
-export async function getTutor(userId: string): Promise<TutorDetail | null> {
+export const getTutor = cache(async (userId: string): Promise<TutorDetail | null> => {
   const supabase = await createClient();
 
   const [{ data: tutor }, { data: listings }] = await Promise.all([
@@ -78,4 +79,4 @@ export async function getTutor(userId: string): Promise<TutorDetail | null> {
   if (!tutor) return null;
 
   return { ...tutor, listings: listings ?? [] } as TutorDetail;
-}
+});
