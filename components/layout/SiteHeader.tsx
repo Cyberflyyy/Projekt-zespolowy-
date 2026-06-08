@@ -55,28 +55,6 @@ export async function SiteHeader() {
             >
               Jak to działa
             </Link>
-            <span
-              className="kp-nav-link"
-              style={{
-                padding: "4px 8px",
-                borderRadius: 6,
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 4,
-                cursor: "default",
-              }}
-            >
-              Dla firm
-              <span style={{
-                fontSize: 9,
-                padding: "1px 5px",
-                background: "var(--fg)",
-                color: "var(--accent-fg)",
-                borderRadius: 3,
-                fontFamily: "var(--font-mono)",
-                letterSpacing: 0,
-              }}>NEW</span>
-            </span>
           </nav>
         </div>
 
